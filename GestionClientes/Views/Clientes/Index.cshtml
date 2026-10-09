@@ -1,0 +1,46 @@
+@model IEnumerable<Cliente>
+@{
+    ViewData["Title"] = "Listado de clientes";
+}
+
+<h2>Listado de clientes</h2>
+
+@* Formulario HTML con metodo GET (busqueda) *@
+<form asp-action="Index" method="get" class="busqueda">
+  <input type="text" name="q" placeholder="Buscar por nombre o correo" value="@ViewBag.Q">
+  <button type="submit">Buscar</button>
+</form>
+
+@if (!Model.Any())
+{
+    <p>No hay clientes para mostrar.</p>
+}
+else
+{
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Acciones</th></tr>
+      </thead>
+      <tbody>
+      @foreach (var cli in Model)
+      {
+        <tr>
+          <td>@cli.Id</td>
+          <td>@cli.Nombre</td>
+          <td>@cli.Correo</td>
+          <td>@cli.Telefono</td>
+          <td class="acciones">
+            <a class="btn" asp-action="Editar" asp-route-id="@cli.Id">Editar</a>
+            @* Formulario HTML con metodo POST (eliminar) *@
+            <form asp-action="Eliminar" method="post"
+                  onsubmit="return confirm('¿Eliminar a este cliente?');">
+              <input type="hidden" name="id" value="@cli.Id">
+              <button type="submit" class="peligro">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+    <p>Total: <strong>@Model.Count()</strong> cliente(s).</p>
+}

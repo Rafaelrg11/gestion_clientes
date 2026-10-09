@@ -1,0 +1,31 @@
+@model Cliente
+@{
+    var titulo = ViewData["Titulo"]?.ToString() ?? "Cliente";
+    ViewData["Title"] = titulo;
+    // Si el cliente ya tiene Id se edita; si no, se crea
+    var accion = Model.Id == 0 ? "Crear" : "Editar";
+}
+
+<h2>@titulo</h2>
+
+@* Formulario HTML con metodo POST hacia el controlador *@
+<form asp-action="@accion" method="post" class="formulario" novalidate>
+  <input type="hidden" asp-for="Id">
+
+  <label asp-for="Nombre"></label>
+  <input asp-for="Nombre">
+  <span asp-validation-for="Nombre" class="error"></span>
+
+  <label asp-for="Correo"></label>
+  <input asp-for="Correo" type="email">
+  <span asp-validation-for="Correo" class="error"></span>
+
+  <label asp-for="Telefono"></label>
+  <input asp-for="Telefono">
+  <span asp-validation-for="Telefono" class="error"></span>
+
+  <div class="botones">
+    <button type="submit">Guardar</button>
+    <a class="btn secundario" asp-action="Index">Cancelar</a>
+  </div>
+</form>

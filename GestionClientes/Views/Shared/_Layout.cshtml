@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Clientes</title>
+  <link rel="stylesheet" href="~/css/estilos.css" asp-append-version="true">
+</head>
+<body>
+<header>
+  <h1>Módulo de Gestión de Clientes</h1>
+  <nav>
+    <a asp-controller="Clientes" asp-action="Index">Listado</a>
+    <a asp-controller="Clientes" asp-action="Crear">Nuevo cliente</a>
+  </nav>
+</header>
+<main>
+  @if (TempData["Ok"] is string ok)
+  {
+      <p class="ok">@ok</p>
+  }
+  @if (TempData["Error"] is string error)
+  {
+      <p class="error">@error</p>
+  }
+  @RenderBody()
+</main>
+<footer>
+  <p>SENA &middot; GA7-220501096-AA2-EV02 &middot; @DateTime.Now.Year</p>
+</footer>
+</body>
+</html>
